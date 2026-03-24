@@ -14,7 +14,7 @@ setup(
     url="https://github.com/jeffrichardchemistry/spyn",
     package_dir={"": "code"},
     packages=find_packages(where="code"),
-    python_requires=">=3.6",
+    python_requires=">=3.9",
     install_requires=[
         "PyQt5>=5.12",
         "pandas>=0.25",

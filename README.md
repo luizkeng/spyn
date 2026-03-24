@@ -1,7 +1,7 @@
 [![CI](https://github.com/jeffrichardchemistry/spyn/actions/workflows/ci.yml/badge.svg)](https://github.com/jeffrichardchemistry/spyn/actions/workflows/ci.yml)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4019023.svg)](https://doi.org/10.5281/zenodo.4019023)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![Python 3.8+](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/)
+[![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/)
 
 # SPYN
 
@@ -48,7 +48,7 @@ See [docs/quickstart.md](docs/quickstart.md) for a step-by-step tutorial.
 
 | Component | Version | Notes |
 |-----------|---------|-------|
-| Python | ≥ 3.6 | 3.8 recommended |
+| Python | ≥ 3.9 | 3.9 or newer |
 | PyQt5 | ≥ 5.12 | GUI framework |
 | NumPy / SciPy / Pandas / Matplotlib | see requirements.txt | Pure-Python stack |
 | OpenBabel | ≥ 3.0 | Conformer search (`obabel`, `obenergy`) |

@@ -12,7 +12,7 @@ authors = [
     { name = "Jefferson Richard Dias da Silva" },
     { name = "Luiz Henrique Keng Queiroz Junior", email = "lhkengqueiroz@ufg.br" },
 ]
-requires-python = ">=3.6"
+requires-python = ">=3.9"
 dependencies = [
     "PyQt5>=5.12",
     "pandas>=0.25",
