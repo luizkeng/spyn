@@ -118,10 +118,13 @@ python3 Spyn_2.0_alpha/install_ui.py
         └── extracts spyn.tar.gz
             └── xterm runs install_spyn.py
                 ├── dependency.sh      → system + Python packages
-                ├── qe-6.3.tar.gz      → extract + compile pw.x
-                ├── qe-gipaw-6.3/      → configure + compile gipaw.x
+                ├── qe-7.3.tar.gz      → extract + compile pw.x + gipaw.x (bundled)
                 └── simbolic.sh        → /usr/bin/pw  /usr/bin/gipaw
 ```
+
+> **Branch `QE_7.x_upgrade`** — Migração do installer do QE 6.3 para QE 7.3.
+> O GIPAW está integrado ao QE 7.x (não é mais um plugin externo), eliminando
+> o passo `makemaster.sh` e o diretório `qe-gipaw-6.3/`. Ver detalhes abaixo.
 
 ---
 
@@ -152,6 +155,28 @@ GitHub Actions at `.github/workflows/ci.yml`:
 - Matrix: Python 3.9, 3.10, 3.11 (Ubuntu latest)
 - Steps: `pip install -e .` → `pytest --cov` → Codecov upload (3.9 only)
 - Minimum Python: **3.9** (NumPy 2.0 requirement for `np.trapezoid`)
+
+---
+
+## QE 7.x upgrade (branch `QE_7.x_upgrade`)
+
+Compatibilidade com Quantum ESPRESSO 7.3, avaliada em Mar 2026.
+
+### Mudanças aplicadas
+
+| Arquivo | Mudança |
+|---------|---------|
+| `install_spyn.py` | `qe-6.3` → `qe-7.3`; removido `--enable-shared` (eliminado no 7.x); removidas 3 linhas do fluxo GIPAW externo |
+| `simbolic.sh` | Caminho do `gipaw.x` corrigido — agora em `qe-7.3/bin/` junto com `pw.x` |
+| `pwscfnmr.py` | Removido `spline_ps = .true.` do input GIPAW (keyword descontinuada no 7.x) |
+| `makemaster.sh` | **Deletado** — obsoleto; GIPAW agora é nativo no QE 7.x |
+
+### Motivação técnica
+
+No QE 7.0+, o GIPAW foi integrado ao pacote principal (`GIPAW/` dentro do tarball).
+O fluxo anterior exigia baixar `qe-gipaw-6.3` separado, configurar com
+`--with-qe-source` e compilar em etapa distinta. No QE 7.x, basta
+`make gipaw` após o `configure` padrão.
 
 ---
 
