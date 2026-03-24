@@ -18,10 +18,13 @@ SPYN reduces a typical GIPAW NMR workflow from ≥ 11 manual command-line steps 
 
 ```bash
 git clone https://github.com/jeffrichardchemistry/spyn.git
-cd spyn
-conda env create -f environment.yml
-conda activate spyn-env
+cd spyn/Spyn_1.0_alpha
+python3 install_ui.py
 ```
+
+The graphical installer handles everything automatically: system packages,
+Python dependencies, Quantum ESPRESSO 6.3 compilation with GIPAW support,
+and system links (`pw`, `gipaw`). See [docs/installation.md](docs/installation.md) for details.
 
 ## Quick start — reproducible example (no QE required)
 

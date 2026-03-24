@@ -1,121 +1,113 @@
 # Installation Guide
 
-Tested on **Ubuntu 20.04 LTS**, **Linux Mint 20**, and **Debian 11**.
+SPYN comes with a graphical installer that handles all dependencies
+automatically — including downloading, compiling, and configuring
+Quantum ESPRESSO 6.3 with GIPAW support.
 
 ---
 
-## 1. System prerequisites
+## Automated installation (recommended)
 
-```bash
-sudo apt update
-sudo apt install -y \
-    git wget curl \
-    gawk gfortran \
-    openmpi-bin openmpi-doc libopenmpi-dev \
-    xterm openbabel jmol \
-    python3-dev python3-pip
-```
+Tested on **Debian 10/11**, **Ubuntu 18.04/20.04 LTS**,
+**Linux Mint 19/20**, and **Elementary OS 5**.
 
----
+### Step 1 — Download and unzip
 
-## 2. Install Miniconda (if not already installed)
-
-```bash
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-bash Miniconda3-latest-Linux-x86_64.sh -b -p "$HOME/miniconda"
-echo 'export PATH="$HOME/miniconda/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc
-```
-
----
-
-## 3. Create the SPYN conda environment
+Download the latest release from
+https://github.com/jeffrichardchemistry/spyn/releases and unzip, or clone:
 
 ```bash
 git clone https://github.com/jeffrichardchemistry/spyn.git
-cd spyn
-conda env create -f environment.yml
-conda activate spyn-env
 ```
 
-This installs Python 3.8, PyQt5, NumPy, SciPy, Pandas, Matplotlib, and
-OpenBabel from `conda-forge`.
+### Step 2 — Run the graphical installer
+
+```bash
+cd spyn/Spyn_1.0_alpha
+python3 install_ui.py
+```
+
+A window opens asking for the installation directory.
+
+### Step 3 — Choose directory and click Install
+
+1. Click **...** to browse and select the destination folder.
+2. Click **Install**.
+3. A terminal window opens and runs the full installation automatically.
+   When prompted, enter your **root password** to install system packages.
+
+### What the installer does automatically
+
+| Step | Action |
+|------|--------|
+| System packages | Installs `gawk`, `gfortran`, `openmpi-bin`, `libopenmpi-dev`, `xterm`, `openbabel`, `jmol` via `apt-get` |
+| Python packages | Installs `PyQt5`, `matplotlib`, `pandas`, `scipy`, `numpy` via `pip3` |
+| Quantum ESPRESSO | Extracts `qe-6.3.tar.gz`, runs `./configure --enable-parallel --enable-shared`, compiles `pw.x` and `gipaw.x` using all available CPU cores |
+| GIPAW module | Configures and compiles the GIPAW module against the QE 6.3 source |
+| System links | Copies `pw.x` → `/usr/bin/pw` and `gipaw.x` → `/usr/bin/gipaw` |
+| Desktop entry | Creates a SPYN application icon in the system applications menu |
+
+After the terminal closes, SPYN is ready to use.
+
+### Step 4 — Launch SPYN
+
+Either click the SPYN icon in the applications menu, or:
+
+```bash
+cd /your/chosen/directory/spyn
+python3 spyn_main.py
+```
 
 ---
 
-## 4. Install Quantum ESPRESSO with GIPAW support
+## Manual installation (non-Debian systems)
 
-Quantum ESPRESSO is **not** included in the conda environment because it
-requires Fortran compilation and MPI.
+For RPM-based distributions (openSUSE, Fedora, CentOS) or systems
+where the automated installer does not work, install dependencies manually.
 
-### Option A — Compile from source (recommended for full control)
+### System packages
+
+**Debian/Ubuntu:**
+```bash
+sudo apt-get install gawk gfortran openmpi-bin openmpi-doc libopenmpi-dev \
+                     xterm openbabel jmol python3-dev python3-pip
+```
+
+**openSUSE:**
+```bash
+sudo zypper install gawk gcc-fortran openblas-devel lapack fftw3-devel lam xterm openbabel
+```
+
+### Python packages
 
 ```bash
-# Download QE 6.3
-wget https://github.com/QEF/q-e/archive/qe-6.3.tar.gz
-tar -xzf qe-6.3.tar.gz
-cd q-e-qe-6.3
+pip3 install PyQt5 matplotlib pandas scipy numpy
+```
 
-# Configure and compile
-./configure --enable-openmp
+### Quantum ESPRESSO + GIPAW
+
+```bash
+# Extract and compile QE 6.3
+cd spyn/code/spyn/qe
+tar -xzf qe-6.3.tar.gz
+cd qe-6.3
+./configure --enable-parallel --enable-shared
 make -j$(nproc) pw
 
-# Compile GIPAW plugin (download separately from http://www.gipaw.net)
-cd ..
-wget http://www.gipaw.net/gipaw-qe6.3.tar.gz
-tar -xzf gipaw-qe6.3.tar.gz
-cd gipaw-qe6.3
+# Compile GIPAW module
+cd qe-gipaw-6.3
+./configure --with-qe-source=$PWD/..
 make -j$(nproc)
+
+# Create system links
+sudo cp ../bin/pw.x /usr/bin/pw
+sudo cp bin/gipaw.x /usr/bin/gipaw
 ```
 
-### Option B — Use distribution packages or pre-compiled binaries
+### Pseudopotentials
 
-Some distributions ship `quantum-espresso` via apt. Verify that `gipaw.x`
-is included before using this option.
-
-### Create symbolic links (required by SPYN)
-
-SPYN looks for executables named `pw` and `gipaw` in the application
-directory. Create symbolic links after compilation:
-
-```bash
-ln -s /path/to/qe-6.3/bin/pw.x    /path/to/spyn/code/spyn/pw
-ln -s /path/to/gipaw-qe6.3/gipaw.x /path/to/spyn/code/spyn/gipaw
-```
-
----
-
-## 5. Download pseudopotentials
-
-SPYN uses `pbe-tm-new-gipaw-dc` pseudopotentials for GIPAW calculations.
-
-```bash
-# Place pseudopotentials in the pp/ directory
-mkdir -p /path/to/spyn/code/spyn/pp
-cd /path/to/spyn/code/spyn/pp
-# Download from http://www.gipaw.net — follow instructions on the website
-```
-
----
-
-## 6. Test the installation
-
-```bash
-conda activate spyn-env
-cd examples/lamivudine
-python run_example.py
-ls example_spectrum.png   # should exist after ~5 seconds
-```
-
-If `example_spectrum.png` is created without errors, the Python stack is
-working correctly.
-
-To test the full GUI:
-
-```bash
-cd code/spyn
-python spyn_main.py
-```
+Place `pbe-tm-new-gipaw-dc` pseudopotentials in `code/spyn/pp/`.
+Download from http://www.gipaw.net.
 
 ---
 
@@ -123,9 +115,10 @@ python spyn_main.py
 
 | Error | Cause | Fix |
 |-------|-------|-----|
-| `ModuleNotFoundError: No module named 'PyQt5'` | conda env not activated | `conda activate spyn-env` |
-| `obabel: command not found` | OpenBabel not installed | `sudo apt install openbabel` or `conda install -c conda-forge openbabel` |
-| `FileNotFoundError: pw` | Missing symlink | Create symlink as described in Step 4 |
+| `ModuleNotFoundError: No module named 'PyQt5'` | PyQt5 not installed | `pip3 install PyQt5` |
+| `obabel: command not found` | OpenBabel not installed | `sudo apt install openbabel` |
+| `pw: command not found` | System link missing | Run `simbolic.sh` manually or re-run installer |
+| `gipaw: command not found` | System link missing | Same as above |
 | `xterm: command not found` | xterm not installed | `sudo apt install xterm` |
-| GIPAW calculation hangs | MPI not configured | Verify `mpirun -np 1 pw < /dev/null` exits cleanly |
-| `jmol: command not found` | Jmol not installed | `sudo apt install jmol` (optional — only needed for 3D visualisation) |
+| Compilation fails with MPI error | MPI libraries missing | `sudo apt install openmpi-bin libopenmpi-dev` |
+| GIPAW configure error | QE source path wrong | Check that `--with-qe-source` points to the QE 6.3 root |

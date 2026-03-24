@@ -33,7 +33,7 @@ docs/figures/workflow_comparison.pdf
 .vscode/settings.json
 .idea/
 
-# Claude Code internal
+# Local development tools
 .claude/
 
 # OS
