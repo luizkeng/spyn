@@ -1,0 +1,46 @@
+{
+  "title": "SPYN v2.0.0: An Open-Source Python Platform with GUI for NMR Crystallography",
+  "description": "SPYN is an open-source Python/PyQt5 desktop application providing a unified graphical interface for NMR crystallography workflows. It integrates four modules: (1) conformational search via genetic algorithm (OpenBabel), (2) Boltzmann population analysis, (3) solid-state NMR calculations using the GIPAW method (Quantum ESPRESSO), and (4) spectral visualisation with Lorentzian broadening and overlay of experimental/theoretical spectra. SPYN reduces a full GIPAW workflow from ≥11 manual command-line steps to 6 GUI interactions, making solid-state NMR crystallography accessible to non-specialist users.",
+  "upload_type": "software",
+  "access_right": "open",
+  "license": "GPL-3.0",
+  "version": "2.0.0",
+  "language": "eng",
+  "creators": [
+    {
+      "name": "Dias da Silva, Jefferson Richard",
+      "affiliation": "Universidade Federal de Goiás (UFG) — LACIQ"
+    },
+    {
+      "name": "Keng Queiroz Junior, Luiz Henrique",
+      "affiliation": "Universidade Federal de Goiás (UFG) — LACIQ"
+    }
+  ],
+  "keywords": [
+    "NMR crystallography",
+    "GIPAW",
+    "GIAO",
+    "solid-state NMR",
+    "conformational search",
+    "Boltzmann distribution",
+    "Quantum ESPRESSO",
+    "computational chemistry",
+    "chemical shift",
+    "Python"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/jeffrichardchemistry/spyn",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    },
+    {
+      "identifier": "10.5281/zenodo.4019024",
+      "relation": "isNewVersionOf",
+      "scheme": "doi"
+    }
+  ],
+  "communities": [
+    {"identifier": "zenodo"}
+  ]
+}

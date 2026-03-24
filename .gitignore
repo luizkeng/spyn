@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Packaging / build
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+
+# Testing / coverage
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+.pytest_cache/
+*.pytest_cache
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Generated outputs
+examples/lamivudine/example_spectrum.png
+docs/figures/workflow_comparison.png
+docs/figures/workflow_comparison.pdf
+
+# IDE
+.vscode/settings.json
+.idea/
+
+# Claude Code internal
+.claude/
+
+# OS
+.DS_Store
+Thumbs.db
