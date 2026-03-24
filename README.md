@@ -18,7 +18,7 @@ SPYN reduces a typical GIPAW NMR workflow from ≥ 11 manual command-line steps 
 
 ```bash
 git clone https://github.com/jeffrichardchemistry/spyn.git
-cd spyn/Spyn_1.0_alpha
+cd spyn/Spyn_2.0_alpha
 python3 install_ui.py
 ```
 

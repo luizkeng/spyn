@@ -23,7 +23,7 @@ git clone https://github.com/jeffrichardchemistry/spyn.git
 ### Step 2 — Run the graphical installer
 
 ```bash
-cd spyn/Spyn_1.0_alpha
+cd spyn/Spyn_2.0_alpha
 python3 install_ui.py
 ```
 
