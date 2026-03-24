@@ -47,7 +47,7 @@ decisions for contributors and collaborators.
 
 | File | Change |
 |------|--------|
-| `README.md` | Complete rewrite — badges (CI, DOI, license), quick install using `install_ui.py`, requirements table, how-to-cite BibTeX |
+| `README.md` | v2.0.0: complete rewrite — badges, quick install, requirements, how-to-cite BibTeX. v2.0.1: expanded "Installation and setup" section documenting `install_ui.py` as first-class contribution — competitive positioning paragraph, two-stage ASCII flowchart of the full automation chain, summary table mapping 9 automated phases to manual equivalents (6 user actions vs ≥ 20 manual commands), CI/testing table promoted to README visibility |
 | `code/spyn/scripts/scraping.sh` | Removed hardcoded absolute path `/home/jefferson/Dropbox/...`; now accepts log path as argument `$1` |
 
 ### Renamed
@@ -162,3 +162,4 @@ GitHub Actions at `.github/workflows/ci.yml`:
 - [ ] Update README BibTeX with the actual v2.0.0 Zenodo DOI
 - [ ] Add comparison section to manuscript (see `docs/comparison.md`)
 - [ ] Update Availability table in manuscript with CI/test metadata
+- [ ] Add "Installation and Setup" section to the manuscript mirroring README — document `install_ui.py` as first-class contribution with the two-stage flowchart and summary table (see README.md for reference text)
